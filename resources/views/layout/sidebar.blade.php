@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('Produto.index')}}" class="nav-link">
+                    <a href="/Produto" class="nav-link">
                         <i class="nav-icon fa fa-cart-plus"></i>
                         <p>
                             Produto

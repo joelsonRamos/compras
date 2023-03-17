@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 // PRODUTO
 Route::get('/Produto', [App\Http\Controllers\Produtos\ProdutosController::class, 'index'])->name('Produto.index');
+Route::post('/Produto/store', [App\Http\Controllers\Produtos\ProdutosController::class, 'store'])->name('Produto.store');

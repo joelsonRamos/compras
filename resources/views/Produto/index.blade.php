@@ -8,6 +8,9 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                 <h5>Adicioar Produtos</h5>
+                @if (session('status'))
+                <h5 class="alert alert-warning">{{session('status')}}</h5>
+                @endif
                 </div>
             </div>
             </div><!-- /.container-fluid -->
@@ -28,7 +31,46 @@
                     </h3>
                 </div>
                 <div class="card-body">
-                    Meus produtos
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @php
+                            $i=1;
+                        @endphp
+                        @foreach ($produtos as $keys=>$item )
+                        <tr>
+                          <td>{{$i++}}</td>
+                          <td>{{$item['nome']}}</td>
+                          <td>{{$item['preco']}}</td>
+                          <td>{{$item['quantidade']}}</td>
+                          <td>
+                            <button  class="btn btn-success  m-1 btn-sm" 
+                                data-mytitle=""
+                                data-toggle="modal" title="Editar " data-target="#editcampo" >
+                              <i class="fa-solid fa-edit nav-icon"></i>
+                            </button>
+                            <button  class="btn btn-danger  m-1 btn-sm" 
+                                data-toggle="modal" title="Deletar ">
+                                <i class="fa-solid fa-trash nav-icon"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        @endforeach ()
+                        
+                        
+                            
+                        
+
+                      </tbody>
+                    </table>
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -46,33 +88,27 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="" method="POST" class="form-horizontal">
-          {{method_field('PUT')}}
-          {{ csrf_field()}}
+        <form action="/Produto/store" method="post" class="form-horizontal" data-netlify="true">
+          {{-- {{ csrf_field()}} --}}
+          @csrf
+          {{-- <input name="form-name" value="Netlify Rocks" type="hidden" /> --}}
           <div class="modal-body">
   
             <div class="form-group">
                 <label for="user">Nome do Produto</label>
-                <input type="text" class="form-control" min="0" id="edit_name_setor" name="name_setor" required>
+                <input type="text" class="form-control" min="0" id="nome_produto" name="nome" required>
             </div>
             <div class="form-group row">
               <div class="col-sm-6">                                                                       
                 <label for="user">Quantidade</label>
-                <input type="number" class="form-control" min="0" id="edit_name_setor" name="name_setor" required>
+                <input type="number" class="form-control" min="0" id="quantidade_produto" name="quantidade" required>
               </div>
               <div class="col-sm-6">
                 <label for="user">Preço</label>
-                <input type="number" class="form-control" step="0.01" min="0.01" id="edit_name_setor" name="name_setor" required>
+                <input type="number" class="form-control" step="0.01" min="0.01" id="preco_produto" name="preco" required>
               </div>
             </div>
-            {{-- <div class="form-group">
-              <label for="campo">Categoria</label>
-                <select id="campo" name="campo_um" class="form-control select2bs4" style="width: 100%;">
-                  <option>Selecione um campo</option>
-                  <option>Feijão</option>
-                  <option>Arroz</option>
-                </select>
-            </div> --}}
+
   
           </div>
       

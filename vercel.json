@@ -1,9 +1,11 @@
 {
     "version": 2,
-    "builds": [
-        { "src": "/api/index.php", "use": "vercel-php@0.5.2" },
-        { "src": "/public/**", "use": "@vercel/static" }
-    ],
+    "functions": {
+        "api/*.php": {
+          "runtime": "vercel-php@0.5.2"
+        }
+        
+      },
     "routes": [
         {
             "src": "/(css|js)/(.*)",
@@ -12,8 +14,10 @@
         {
             "src": "/(.*)",
             "dest": "/api/index.php"
-        }
+        },
+        { "src": "/Produto", "dest": "/" }
     ],
+   
     "env": {
         "APP_NAME": "Vercel Laravel",
         "APP_ENV": "production",

@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Produtos;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Kreait\Firebase\Contract\Database;
 
 class ProdutosController extends Controller
 {
+    public function __construct(Database $database)
+    {
+        $this->database = $database;
+        $this->tablename = 'produtos';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,10 +20,11 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        return view('Produto.index');
+        $produtos = $this->database->getReference($this->tablename)->getValue();
+        return view('Produto.index', compact('produtos'));
     }
 
-    /**
+    /** 
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,7 +42,19 @@ class ProdutosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $postData = [
+            'nome' => $request->nome,
+            'quantidade' => $request->quantidade,
+            'preco' => $request->preco
+        ];
+        
+        $postRef = $this->database->getReference($this->tablename)->push($postData);
+        if($postRef){
+            return redirect('Produto.index')->with('status','Salvo com sucesso' );
+        }else{
+            return redirect('Produto.index')->with('status','erro ao salvar' );
+        }
     }
 
     /**
